@@ -1,4 +1,4 @@
-import { Controller, Get, NotFoundException, Param, ParseIntPipe, Query } from '@nestjs/common';
+import { Body, Controller, Get, NotFoundException, Param, ParseIntPipe, Post, Query } from '@nestjs/common';
 import { TicketsService } from './tickets.service.js';
 import * as ticketInterface from './ticket.interface.js';
 
@@ -9,7 +9,7 @@ export class TicketsController {
     findAll(
         @Query("status") status?: ticketInterface.Ticket["status"],
         @Query("priority") priority?: ticketInterface.Ticket["priority"],
-    ){
+    ) {
         return this.ticketsService.findAll(status, priority);
     }
     @Get(":id")
@@ -20,4 +20,10 @@ export class TicketsController {
         }
         return ticket;
     }
+    @Post()
+    create(@Body() payload: any) {
+        return this.ticketsService.create(payload)
+    }
+
+
 }
