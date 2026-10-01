@@ -37,10 +37,17 @@ export class TicketsService {
             createdAt: "2026-09-04T16:45:00.000Z",
         },
     ]
-    findAll() {
-        return this.tickets
+    findAll(status?: Ticket['status'], priority?: Ticket['priority']){
+        let tickets = this.tickets;
+        if (status) {
+            tickets = tickets.filter((ticket) => ticket.status === status)
+        }
+        if (priority) {
+            tickets = tickets.filter((ticket) => ticket.priority === priority)
+        }
+        return tickets;
     }
-    findOne(id: number) {
-        return this.tickets.find((ticket) => ticket.id === id)
+    findOne(id: number): Ticket | undefined {
+        return this.tickets.find((ticket) => ticket.id === id);
     }
 }
